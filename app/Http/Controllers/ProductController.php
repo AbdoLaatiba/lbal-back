@@ -64,4 +64,31 @@ class ProductController extends Controller
         $this->productService->deleteProduct($product->id);
         return response()->json(['message' => 'Product deleted successfully']);
     }
+
+    /**
+     * Approve the specified resource.
+     */
+    public function approve(Product $product): JsonResponse
+    {
+        $this->productService->approveProduct($product->id);
+        return response()->json(['message' => 'Product approved successfully']);
+    }
+
+    /**
+     * Disapprove the specified resource.
+     */
+    public function disapprove(Product $product): JsonResponse
+    {
+        $this->productService->disapproveProduct($product->id);
+        return response()->json(['message' => 'Product disapproved successfully']);
+    }
+
+    /**
+     * Archive the specified resource.
+     */
+    public function archive(Product $product): JsonResponse
+    {
+        $this->productService->archiveProduct($product->id);
+        return response()->json(['message' => 'Product archived successfully']);
+    }
 }

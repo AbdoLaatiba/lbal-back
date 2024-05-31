@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('brand')->nullable();
             $table->string('color')->nullable();
             $table->string('size')->nullable();
-            $table->enum('status', ['draft', 'published', 'pending', 'sold', 'reserved', 'inactive', 'rejected', 'archived'])->default('pending');
+            $table->enum('status', ['draft', 'published', 'sold', 'inactive', 'archived'])->default('published');
+            $table->boolean('is_approved')->default(false);
             $table->enum('condition', ['new', 'like new', 'gently used', 'used', 'vintage', 'fair', 'poor'])->default('new');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();

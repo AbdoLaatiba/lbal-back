@@ -103,14 +103,9 @@ class ProductService
         return Product::where('id', $id)->update(['is_approved' => false]);
     }
 
-    public function markAsSold($id)
+    public function archiveProduct($id)
     {
-        return Product::where('id', $id)->update(['sold' => true]);
-    }
-
-    public function markAsUnsold($id)
-    {
-        return Product::where('id', $id)->update(['sold' => false]);
+        return Product::where('id', $id)->update(['status' => 'archived']);
     }
 
     public function getProductsByUser($userId, $filters = [])

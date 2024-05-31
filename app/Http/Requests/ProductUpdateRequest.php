@@ -27,7 +27,7 @@ class ProductUpdateRequest extends FormRequest
             'category' => 'string',
             'brand' => 'string',
             'condition' => 'in:new,like new,gently used,used,vintage,fair,poor',
-            'status' => 'in:draft,published,pending,sold,reserved,inactive,rejected,archived',
+            'status' => 'in:draft,published,sold,inactive,archived',
             'color' => 'string',
             'size' => 'string',
             'description' => 'string',

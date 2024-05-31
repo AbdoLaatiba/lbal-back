@@ -27,7 +27,7 @@ class ProductStoreRequest extends FormRequest
             'category' => 'required|string',
             'brand' => 'required|string',
             'condition' => 'required|in:new,like new,gently used,used,vintage,fair,poor',
-            'status' => 'in:draft,published,pending,sold,reserved,inactive,rejected,archived',
+            'status' => 'in:draft,published,sold,inactive,archived',
             'color' => 'nullable|string',
             'size' => 'nullable|string',
             'description' => 'nullable|string',
