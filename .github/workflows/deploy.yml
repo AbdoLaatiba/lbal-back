@@ -25,10 +25,11 @@ jobs:
           echo " ${{ secrets.DO_SERVER_USERNAME }}@${{ secrets.DO_SERVER_IP }}" >> ~/.ssh/known_hosts
 
       - name: Deploy to server (replace with your deployment commands)
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.DO_SERVER_IP }}
           username: ${{ secrets.DO_SERVER_USERNAME }}
+          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
           script: |
             cd /var/www/lbal-back
             bash deploy.sh
