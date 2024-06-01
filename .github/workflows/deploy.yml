@@ -20,14 +20,7 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
 
-    - name: Add known hosts
-      run: |
-        sshpass -p ${{ secrets.DO_KEY_PHRASE }} ssh-keyscan -H ${{ secrets.DO_SERVER_IP }} >> ~/.ssh/known_hosts
 
-    - name: Copy files to server
-      run: |
-        scp -r . root@${{ secrets.DO_SERVER_IP }}:/var/www/lbal-back
-
-    - name: SSH into server and run deploy script
+    - name: SSH into server and pull latest code
       run: |
         ssh root@${{ secrets.DO_SERVER_IP }} "bash /var/www/lbal-back/deploy.sh"
