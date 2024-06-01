@@ -14,18 +14,9 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('register', [AuthController::class, 'register']);
 
     // Logout route
-    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
     // register admin route
-    Route::post('register-admin', [AuthController::class, 'registerAdmin']);
-
-    // Password reset routes
-    // Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail');
-    // Route::post('password/reset', 'ResetPasswordController@reset');
+    Route::post('register-admin', [AuthController::class, 'registerAdmin'])->middleware(['auth:sanctum', 'check_admin']);
 });
 
-// Protected routes that require authentication
-Route::group(['middleware' => 'auth:api'], function () {
-    // User profile route
-    Route::get('profile', [UserController::class, 'profile']);
-});

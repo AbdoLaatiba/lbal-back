@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\auth;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterRequest extends FormRequest
@@ -17,7 +18,7 @@ class RegisterRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
@@ -28,7 +29,7 @@ class RegisterRequest extends FormRequest
             'phone' => ['nullable', 'string', 'max:255'],
             'city' => ['nullable', 'string', 'max:255'],
             'address' => ['nullable', 'string', 'max:255'],
-            'role' => 'nullable|string|in:user,vendor',
+            'role' => 'nullable|string|in:user,seller',
         ];
     }
 

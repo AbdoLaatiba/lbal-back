@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\auth\LoginRequest;
 use App\Http\Requests\auth\RegisterRequest;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
@@ -18,14 +19,28 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
+        if($user->status == 'pending') {
+            return response()->json(['message' => 'Your account is pending approval'], 401);
+        }
+
         return $this->respondWithToken($user);
     }
 
     public function register(RegisterRequest $request)
     {
-        $user = User::create($request->validated());
+        $data = $request->validated();
+        if($data['role'] == 'seller') {
+            $data['status'] = 'pending';
+        }else {
+            $data['status'] = 'active';
+        }
+        $user = User::create($data);
 
-        return $this->respondWithToken($user);
+        if ($user->role == 'seller') {
+            return response()->json(['message' => 'Your account is created and pending approval, you will be notified once approved.']);
+        } else {
+            return $this->respondWithToken($user);
+        }
     }
 
     public function logout()
@@ -48,9 +63,9 @@ class AuthController extends Controller
         return $this->respondWithToken($user);
     }
 
-    protected function respondWithToken($user)
+    protected function respondWithToken($user): JsonResponse
     {
-        $token = $user->createToken('authToken')->plainTextToken;
+        $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json([
             'token' => $token,
             'user' => $user,
