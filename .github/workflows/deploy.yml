@@ -25,7 +25,7 @@ jobs:
           echo " ${{ secrets.DO_SERVER_USERNAME }}@${{ secrets.DO_SERVER_IP }}" >> ~/.ssh/known_hosts
 
       - name: Deploy to server (replace with your deployment commands)
-        uses: appleboy/ssh-action@v1  # Or another preferred SSH action
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DO_SERVER_IP }}
           username: ${{ secrets.DO_SERVER_USERNAME }}
