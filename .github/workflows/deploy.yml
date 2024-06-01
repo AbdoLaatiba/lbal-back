@@ -22,7 +22,7 @@ jobs:
 
     - name: Add known hosts
       run: |
-        ssh-keyscan -H ${{ secrets.DO_SERVER_IP }} >> ~/.ssh/known_hosts
+        sshpass -p ${{ secrets.DO_KEY_PHRASE }} ssh-keyscan -H ${{ secrets.DO_SERVER_IP }} >> ~/.ssh/known_hosts
 
     - name: Copy files to server
       run: |
