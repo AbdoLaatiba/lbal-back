@@ -33,4 +33,12 @@ jobs:
           passphrase: ${{ secrets.DO_KEY_PHRASE }}
           script: |
             cd /var/www/lbal-back
-            bash deploy.sh
+            git pull
+            composer install --no-interaction --prefer-dist --optimize-autoloader --no-scripts --no-dev --no-progress --no-plugins
+            php artisan migrate
+            php artisan config:clear
+            php artisan route:clear
+            php artisan view:clear
+            php artisan queue:restart
+
+
