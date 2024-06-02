@@ -14,7 +14,7 @@ class CartController extends Controller
         return response()->json($cart);
     }
 
-    public function addToCart(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $request->validate([
             'product_id' => 'required|exists:products,id|unique:carts,product_id,NULL,id,user_id,' . auth()->id(),
@@ -29,21 +29,23 @@ class CartController extends Controller
         return response()->json($cart);
     }
 
-    public function removeFromCart(Request $request)
+    public function destroy($id): JsonResponse
     {
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-        ]);
         $cart = Cart::where('user_id', auth()->id())
-            ->where('product_id', $request->product_id)
+            ->where('product_id', $id)
             ->first();
+        if (!$cart) {
+            return response()->json([
+                'message' => 'Product not found in cart',
+            ], 404);
+        }
         $cart->delete();
         return response()->json([
             'message' => 'Product removed from cart',
         ]);
     }
 
-    public function clearCart()
+    public function clear(): JsonResponse
     {
         $cart = Cart::where('user_id', auth()->id())->delete();
         return response()->json([

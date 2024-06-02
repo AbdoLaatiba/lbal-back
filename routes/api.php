@@ -17,3 +17,6 @@ require __DIR__ . '/api/users.php';
 
 // cart routes
 require __DIR__ . '/api/cart.php';
+
+// wishlist routes
+require __DIR__ . '/api/wishlist.php';
