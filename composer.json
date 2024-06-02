@@ -7,9 +7,11 @@
     "require": {
         "php": "^8.2",
         "cloudinary-labs/cloudinary-laravel": "^2.1",
+        "intervention/image": "^3.6",
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "spatie/laravel-image-optimizer": "^1.8"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

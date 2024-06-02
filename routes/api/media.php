@@ -9,3 +9,4 @@ Route::delete('media', [MediaController::class, 'destroyAll']);
 Route::get('media', [MediaController::class, 'index']);
 Route::get('media/{id}', [MediaController::class, 'show']);
 Route::get('media/{id}/download', [MediaController::class, 'download']);
+Route::get('media/{id}/preview', [MediaController::class, 'preview']);

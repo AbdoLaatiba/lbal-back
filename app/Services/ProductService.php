@@ -7,9 +7,9 @@ use App\Models\ProductMedia;
 
 class ProductService
 {
-    protected MediaService $mediaService;
+    protected MediaServiceCloudinary $mediaService;
 
-    public function __construct(MediaService $mediaService)
+    public function __construct(MediaServiceCloudinary $mediaService)
     {
         $this->mediaService = $mediaService;
     }

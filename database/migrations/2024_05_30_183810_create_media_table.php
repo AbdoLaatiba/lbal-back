@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('filename');
             $table->string('path');
-            $table->string('public_id');
-            $table->string('type');
             $table->string('size');
             $table->string('extension');
             $table->string('mime_type');

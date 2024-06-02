@@ -7,6 +7,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Media;
 use App\Services\CloudinaryService;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MediaController extends Controller
 {
@@ -22,25 +24,23 @@ class MediaController extends Controller
     public function store(Request $request): JsonResponse
     {
         $request->validate([
-            'file' => 'required|file|mimes:jpeg,png,jpg,gif,svg,webp|max:2048'
+            'file' => 'required|file|mimes:jpeg,png,jpg,gif,svg,webp'
         ]);
 
         $file = $request->file('file');
 
-        $res = $this->cloudinaryService->upload($file);
+        $res = $this->mediaService->upload($file);
 
 
         $media = Media::create([
-            'filename' => $file->getClientOriginalName(),
+            'filename' => $res['filename'],
             'path' => $res['path'],
-            'public_id' => $res['public_id'],
-            'type' => $file->getClientMimeType(),
-            'size' => $file->getSize(),
-            'extension' => $file->extension(),
-            'mime_type' => $file->getMimeType()
+            'size' => $res['size'],
+            'extension' => $res['extension'],
+            'mime_type' => $res['mime_type']
         ]);
 
-        return response()->json($media, 201);
+        return response()->json($res, 201);
     }
 
     public function destroy($id): JsonResponse
@@ -48,46 +48,29 @@ class MediaController extends Controller
        return $this->mediaService->deleteMedia($id);
     }
 
-    public function destroyAll(Request $request)
+    public function destroyAll(Request $request): JsonResponse
     {
         $ids = $request->input('ids');
         return $this->mediaService->deleteAll($ids);
     }
 
-    public function show($id)
+    public function show($id): JsonResponse
     {
-        $media = Media::find($id);
-
-        if(!$media){
-            return response()->json([
-                'message' => 'Media not found'
-            ]);
-        }
-
-        return response()->json($media);
+        return $this->mediaService->getMedia($id);
     }
 
-    public function index()
+    public function index(): JsonResponse
     {
-        $media = Media::all();
-
-        return response()->json($media);
+        return $this->mediaService->getAllMedia();
     }
 
-    public function download($id)
+    public function download($id): StreamedResponse
     {
-        $media = Media::find($id);
+        return $this->mediaService->downloadMedia($id);
+    }
 
-        if(!$media){
-            return response()->json([
-                'message' => 'Media not found'
-            ]);
-        }
-
-        // download file from cloudinary url
-        $tempFile = tempnam(sys_get_temp_dir(), $media->public_id);
-        copy($media->path, $tempFile);
-
-        return response()->download($tempFile, $media->filename);
+    public function preview($id): BinaryFileResponse
+    {
+        return $this->mediaService->previewMedia($id);
     }
 }
