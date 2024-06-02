@@ -20,3 +20,6 @@ require __DIR__ . '/api/cart.php';
 
 // wishlist routes
 require __DIR__ . '/api/wishlist.php';
+
+// order routes
+require __DIR__ . '/api/orders.php';
