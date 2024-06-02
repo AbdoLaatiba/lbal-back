@@ -35,7 +35,7 @@ jobs:
             cd /var/www/lbal-back
             git pull
             composer update --no-interaction --prefer-dist --optimize-autoloader --no-scripts --no-progress --no-plugins
-            php artisan migrate:fresh
+            php artisan migrate
             php artisan config:clear
             php artisan route:clear
             php artisan view:clear
