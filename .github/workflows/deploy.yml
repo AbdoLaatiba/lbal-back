@@ -34,7 +34,7 @@ jobs:
           script: |
             cd /var/www/lbal-back
             git pull
-            composer install --no-interaction --prefer-dist --optimize-autoloader --no-scripts --no-dev --no-progress --no-plugins
+            composer update --no-interaction --prefer-dist --optimize-autoloader --no-scripts --no-progress --no-plugins
             php artisan migrate:fresh
             php artisan config:clear
             php artisan route:clear
