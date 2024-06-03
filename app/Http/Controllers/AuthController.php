@@ -26,7 +26,7 @@ class AuthController extends Controller
         return $this->respondWithToken($user);
     }
 
-    public function register(RegisterRequest $request)
+    public function register(RegisterRequest $request): JsonResponse
     {
         $data = $request->validated();
         if($data['role'] == 'seller') {

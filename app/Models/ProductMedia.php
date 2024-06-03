@@ -15,6 +15,11 @@ class ProductMedia extends Model
         'is_featured'
     ];
 
+    // cast is_featured to boolean
+    protected $casts = [
+        'is_featured' => 'boolean'
+    ];
+
     public function product()
     {
         return $this->belongsTo(Product::class);
