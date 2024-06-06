@@ -29,18 +29,19 @@ class AuthController extends Controller
     public function register(RegisterRequest $request): JsonResponse
     {
         $data = $request->validated();
-        if($data['role'] == 'seller') {
-            $data['status'] = 'pending';
-        }else {
             $data['status'] = 'active';
-        }
+//        if($data['role'] == 'seller') {
+//            $data['status'] = 'pending';
+//        }else {
+//            $data['status'] = 'active';
+//        }
         $user = User::create($data);
 
-        if ($user->role == 'seller') {
-            return response()->json(['message' => 'Your account is created and pending approval, you will be notified once approved.']);
-        } else {
+//        if ($user->role == 'seller') {
+//            return response()->json(['message' => 'Your account is created and pending approval, you will be notified once approved.']);
+//        } else {
+//        }
             return $this->respondWithToken($user);
-        }
     }
 
     public function logout()
