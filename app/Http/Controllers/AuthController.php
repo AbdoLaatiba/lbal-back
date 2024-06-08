@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\auth\LoginRequest;
 use App\Http\Requests\auth\RegisterRequest;
+use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 
@@ -19,7 +20,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if($user->status == 'pending') {
+        if ($user->status == 'pending') {
             return response()->json(['message' => 'Your account is pending approval'], 401);
         }
 
@@ -29,19 +30,9 @@ class AuthController extends Controller
     public function register(RegisterRequest $request): JsonResponse
     {
         $data = $request->validated();
-            $data['status'] = 'active';
-//        if($data['role'] == 'seller') {
-//            $data['status'] = 'pending';
-//        }else {
-//            $data['status'] = 'active';
-//        }
+        $data['status'] = 'active';
         $user = User::create($data);
-
-//        if ($user->role == 'seller') {
-//            return response()->json(['message' => 'Your account is created and pending approval, you will be notified once approved.']);
-//        } else {
-//        }
-            return $this->respondWithToken($user);
+        return $this->respondWithToken($user);
     }
 
     public function logout(Request $request)
@@ -50,7 +41,6 @@ class AuthController extends Controller
 
         // Revoke all tokens...
         $request->user()->tokens()->delete();
-
 
         return response()->json(['message' => 'Successfully logged out']);
     }
