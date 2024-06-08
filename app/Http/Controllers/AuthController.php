@@ -46,6 +46,7 @@ class AuthController extends Controller
 
     public function logout()
     {
+        $user = auth()->user();
         // Revoke all tokens...
         $user->tokens()->delete();
 
